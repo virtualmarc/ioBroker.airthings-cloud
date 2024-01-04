@@ -10,6 +10,23 @@ const axios = require('axios');
 
 const API_BASE: string = 'https://ext-api.airthings.com';
 
+const EXCLUDED_TYPES: string[] = [
+  'HUB',
+  'HOME',
+  'PRO',
+  'CLOUDBERRY',
+  'AGGREGATED_GROUP',
+  'ZONE_GROUP',
+  'AP_1',
+  'UNKNOWN'
+];
+
+const EXCLUDED_SAMPLES: string[] = [
+  'time',
+  'battery',
+  'relayDeviceType'
+];
+
 // Load your modules here, e.g.:
 // import * as fs from "fs";
 
@@ -30,6 +47,8 @@ class AirthingsCloud extends utils.Adapter {
 
   token?: string;
   tokenExpiration?: number;
+
+  updateTimerId?: number;
 
   public constructor(options: Partial<utils.AdapterOptions> = {}) {
     super({
@@ -67,6 +86,10 @@ class AirthingsCloud extends utils.Adapter {
 
       this.log.error(`Authentication failed: ${JSON.stringify(resp.data)}`);
 
+      if (this.updateTimerId) {
+        clearInterval(this.updateTimerId);
+      }
+
       return false;
     }
   }
@@ -101,11 +124,11 @@ class AirthingsCloud extends utils.Adapter {
     for (let device of resp.data.devices) {
       this.log.debug(`Device: ${JSON.stringify(device)}`);
 
-      await this.createDevice(device);
+      await this.createAirthingDevice(device);
     }
   }
 
-  private async createDevice(device: any): Promise<void> {
+  private async createAirthingDevice(device: any): Promise<void> {
     await this.setObjectNotExistsAsync(`devices.${device.id}`, {
       type: 'device',
       native: {},
@@ -268,7 +291,7 @@ class AirthingsCloud extends utils.Adapter {
         desc: 'Segment active',
         read: true,
         write: false,
-        role: 'value'
+        role: 'indicator'
       }
     });
     await this.setStateAsync(`devices.${device.id}.segment.active`, device.segment.active, true);
@@ -318,6 +341,93 @@ class AirthingsCloud extends utils.Adapter {
     });
   }
 
+  private async updateSamples(): Promise<void> {
+    const devices = await this.getDevicesAsync();
+
+    for (let device of devices) {
+      const type = (await this.getStateAsync(`${device._id}.type`))?.val as string;
+      const active = (await this.getStateAsync(`${device._id}.segment.active`))?.val;
+
+      if (active && !EXCLUDED_TYPES.includes(type ?? 'UNKNOWN')) {
+        this.log.debug(`Update device samples: ${device._id}`);
+
+        await this.updateDeviceSamples(device._id);
+      } else {
+        this.log.debug(`Device ${device._id} is excluded`);
+      }
+    }
+  }
+
+  private async updateDeviceSamples(deviceId: string): Promise<void> {
+    const deviceSerial = (await this.getStateAsync(`${deviceId}.id`))?.val as string;
+
+    const resp = await axios.get(`${API_BASE}/v1/devices/${deviceSerial}/latest-samples`, {
+      headers: {
+        Authorization: `Bearer ${await this.getToken()}`
+      }
+    });
+
+    if (resp.status !== 200) {
+      return;
+    }
+
+    const data = resp.data.data;
+    const ts = (data.time ?? (Date.now() / 1_000)) * 1_000;
+
+    if (data.battery) {
+      await this.setStateAsync(`${deviceId}.battery`, {
+        val: data.battery,
+        ack: true,
+        ts,
+        lc: ts,
+        from: this.namespace
+      }, true);
+    }
+
+    if (data.relayDeviceType) {
+      await this.setStateAsync(`${deviceId}.relay_device_type`, {
+        val: data.relayDeviceType,
+        ack: true,
+        ts,
+        lc: ts,
+        from: this.namespace
+      }, true);
+    }
+
+    for (let sampleKey in data) {
+      if (!EXCLUDED_SAMPLES.includes(sampleKey)) {
+        await this.setObjectNotExistsAsync(`${deviceId}.samples.${sampleKey}`, {
+          type: 'state',
+          native: {},
+          common: {
+            name: sampleKey,
+            type: 'number',
+            desc: sampleKey,
+            read: true,
+            write: false,
+            role: 'value'
+          }
+        });
+
+        await this.setStateAsync(`${deviceId}.samples.${sampleKey}`, {
+          val: data[sampleKey],
+          ack: true,
+          ts,
+          lc: ts,
+          from: this.namespace
+        }, true);
+      }
+    }
+  }
+
+  private updateTimer(): void {
+    this.log.debug('Update samples');
+
+    this.updateSamples().then(() => {
+      this.log.debug('Sample update finished');
+    });
+  }
+
   /**
    * Is called when databases are connected and adapter received configuration.
    */
@@ -330,6 +440,8 @@ class AirthingsCloud extends utils.Adapter {
     }
 
     await this.syncDevices();
+
+    setInterval(this.updateTimer, this.config.update_interval * 60_000);
   }
 
   /**
@@ -337,11 +449,9 @@ class AirthingsCloud extends utils.Adapter {
    */
   private onUnload(callback: () => void): void {
     try {
-      // Here you must clear all timeouts or intervals that may still be active
-      // clearTimeout(timeout1);
-      // clearTimeout(timeout2);
-      // ...
-      // clearInterval(interval1);
+      if (this.updateTimerId) {
+        clearInterval(this.updateTimerId);
+      }
 
       callback();
     } catch (e) {
