@@ -49,7 +49,7 @@
         ],
         "license": "MIT",
         "platform": "Javascript/Node.js",
-        "main": "build/src/main.js",
+        "main": "build/main.js",
         "icon": "airthings-cloud.png",
         "enabled": true,
         "extIcon": "https://raw.githubusercontent.com/virtualmarc/ioBroker.airthings-cloud/master/admin/airthings-cloud.png",
