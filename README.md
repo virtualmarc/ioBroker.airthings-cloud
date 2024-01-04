@@ -27,7 +27,7 @@ Get sensor data from the Airthings Cloud (via Airthings Hub).
 
 ## Changelog
 
-### 0.0.1
+### 1.0.0
 
 * (virtualmarc) initial release
 

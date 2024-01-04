@@ -1,104 +1,99 @@
 {
-    "common": {
-        "name": "airthings-cloud",
-        "version": "0.0.1",
-        "news": {
-            "0.0.1": {
-                "en": "initial release",
-                "de": "Erstveröffentlichung",
-                "ru": "Начальная версия",
-                "pt": "lançamento inicial",
-                "nl": "Eerste uitgave",
-                "fr": "Première version",
-                "it": "Versione iniziale",
-                "es": "Versión inicial",
-                "pl": "Pierwsze wydanie",
-                "zh-cn": "首次出版"
-            }
-        },
-        "title": "Airthings Cloud",
-        "titleLang": {
-            "en": "Airthings Cloud",
-            "de": "Airthings Cloud",
-            "ru": "Облако Airthings",
-            "pt": "Nuvem de Airthings",
-            "nl": "Airthings-wolk",
-            "fr": "Nuage d'objets aériens",
-            "it": "Airthings Cloud",
-            "es": "Nube de aire",
-            "pl": "Chmura Airthings",
-            "zh-cn": "空气物云"
-        },
-        "desc": {
-            "en": "Get sensor data from the Airthings Cloud.",
-            "de": "Erhalten Sie Sensordaten aus der Airthings Cloud.",
-            "ru": "Получите данные датчиков из облака Airthings.",
-            "pt": "Obtenha dados de sensores da Airthings Cloud.",
-            "nl": "Ontvang sensorgegevens uit de Airthings Cloud.",
-            "fr": "Obtenez les données des capteurs du Airthings Cloud.",
-            "it": "Ottieni i dati dei sensori da Airthings Cloud.",
-            "es": "Obtenga datos de sensores de Airthings Cloud.",
-            "pl": "Uzyskaj dane z czujników z chmury Airthings.",
-            "zh-cn": "从 Airthings Cloud 获取传感器数据。"
-        },
-        "authors": [
-            "virtualmarc <github@mav.email>"
-        ],
-        "keywords": [
-            "airthings",
-            "airthings hub",
-            "airthings wave",
-            "co2",
-            "radon",
-            "voc",
-            "humidity",
-            "pressure",
-            "temperature"
-        ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "main": "build/main.js",
-        "icon": "airthings-cloud.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/virtualmarc/ioBroker.airthings-cloud/master/admin/airthings-cloud.png",
-        "readme": "https://github.com/virtualmarc/ioBroker.airthings-cloud/blob/master/README.md",
-        "loglevel": "info",
-        "mode": "daemon",
-        "type": "hardware",
-        "compact": true,
-        "materialize": true,
-        "dependencies": [
-            {
-                "js-controller": ">=1.4.2"
-            }
-        ]
+  "common": {
+    "name": "airthings-cloud",
+    "version": "1.0.0",
+    "news": {
+      "1.0.0": {
+        "en": "initial release",
+        "de": "Erstveröffentlichung"
+      }
     },
-    "native": {
-        "option1": true,
-        "option2": "42"
+    "title": "Airthings Cloud",
+    "titleLang": {
+      "en": "Airthings Cloud",
+      "de": "Airthings Cloud",
+      "ru": "Облако Airthings",
+      "pt": "Nuvem de Airthings",
+      "nl": "Airthings-wolk",
+      "fr": "Nuage d'objets aériens",
+      "it": "Airthings Cloud",
+      "es": "Nube de aire",
+      "pl": "Chmura Airthings",
+      "zh-cn": "空气物云"
     },
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "info",
-            "type": "channel",
-            "common": {
-                "name": "Information"
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.connection",
-            "type": "state",
-            "common": {
-                "role": "indicator.connected",
-                "name": "Device or service connected",
-                "type": "boolean",
-                "read": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        }
+    "desc": {
+      "en": "Get sensor data from the Airthings Cloud.",
+      "de": "Erhalten Sie Sensordaten aus der Airthings Cloud.",
+      "ru": "Получите данные датчиков из облака Airthings.",
+      "pt": "Obtenha dados de sensores da Airthings Cloud.",
+      "nl": "Ontvang sensorgegevens uit de Airthings Cloud.",
+      "fr": "Obtenez les données des capteurs du Airthings Cloud.",
+      "it": "Ottieni i dati dei sensori da Airthings Cloud.",
+      "es": "Obtenga datos de sensores de Airthings Cloud.",
+      "pl": "Uzyskaj dane z czujników z chmury Airthings.",
+      "zh-cn": "从 Airthings Cloud 获取传感器数据。"
+    },
+    "authors": [
+      "virtualmarc <github@mav.email>"
+    ],
+    "keywords": [
+      "airthings",
+      "airthings hub",
+      "airthings wave",
+      "co2",
+      "radon",
+      "voc",
+      "humidity",
+      "pressure",
+      "temperature"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "main": "build/main.js",
+    "icon": "airthings-cloud.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/virtualmarc/ioBroker.airthings-cloud/master/admin/airthings-cloud.png",
+    "readme": "https://github.com/virtualmarc/ioBroker.airthings-cloud/blob/master/README.md",
+    "loglevel": "info",
+    "mode": "daemon",
+    "type": "hardware",
+    "compact": true,
+    "materialize": true,
+    "connectionType": "cloud",
+    "dataSource": "poll",
+    "dependencies": [
+      {
+        "js-controller": ">=1.4.2"
+      }
     ]
+  },
+  "native": {
+    "client_id": "",
+    "client_secret": "",
+    "update_interval": 5
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": "Information"
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": "Device or service connected",
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    }
+  ]
 }

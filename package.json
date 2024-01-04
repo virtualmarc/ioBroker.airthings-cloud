@@ -1,6 +1,6 @@
 {
   "name": "iobroker.airthings-cloud",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Get sensor data from the Airthings Cloud.",
   "author": {
     "name": "virtualmarc",
