@@ -2,40 +2,16 @@
 'use strict';
 
 systemDictionary = {
-    'airthings-cloud adapter settings': {
-        'en': 'Adapter settings for airthings-cloud',
-        'de': 'Adaptereinstellungen für airthings-cloud',
-        'ru': 'Настройки адаптера для airthings-cloud',
-        'pt': 'Configurações do adaptador para airthings-cloud',
-        'nl': 'Adapterinstellingen voor airthings-cloud',
-        'fr': "Paramètres d'adaptateur pour airthings-cloud",
-        'it': "Impostazioni dell'adattatore per airthings-cloud",
-        'es': 'Ajustes del adaptador para airthings-cloud',
-        'pl': 'Ustawienia adaptera dla airthings-cloud',
-        'zh-cn': 'airthings-cloud的适配器设置'
+    'Client ID:': {
+        'en': 'Client ID:'
     },
-    'option1': {
-        'en': 'option1',
-        'de': 'Option 1',
-        'ru': 'Опция 1',
-        'pt': 'Opção 1',
-        'nl': 'Optie 1',
-        'fr': 'Option 1',
-        'it': 'opzione 1',
-        'es': 'Opción 1',
-        'pl': 'opcja 1',
-        'zh-cn': '选项1'
+    'Client Secret:': {
+        'en': 'Client Secret:'
     },
-    'option2': {
-        'en': 'option2',
-        'de': 'Option 2',
-        'ru': 'вариант 2',
-        'pt': 'opção 2',
-        'nl': 'Optie 2',
-        'fr': 'Option 2',
-        'it': 'opzione 2',
-        'es': 'opcion 2',
-        'pl': 'Opcja 2',
-        'zh-cn': '选项2'
+    'Update Interval (Minutes):': {
+        'en': 'Update Interval (Minutes):'
+    },
+    'Minutes between updates (Rate limit: 120req/h, 1 request per device)': {
+        'en': 'Minutes between updates (Rate limit: 120req/h, 1 request per device)'
     }
 };
