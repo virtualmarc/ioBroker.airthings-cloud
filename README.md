@@ -31,6 +31,10 @@ Get sensor data from the Airthings Cloud (via Airthings Hub).
 
 * (virtualmarc) initial release
 
+### 1.1.0
+
+* (virtualmarc) update samples on start
+
 ## License
 
 MIT License

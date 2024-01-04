@@ -444,6 +444,8 @@ class AirthingsCloud extends utils.Adapter {
 
         await this.syncDevices();
 
+        await this.updateSamples();
+
         setInterval(this.updateTimer, this.config.update_interval * 60_000);
     }
 

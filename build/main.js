@@ -392,6 +392,7 @@ class AirthingsCloud extends utils.Adapter {
                 return;
             }
             yield this.syncDevices();
+            yield this.updateSamples();
             setInterval(this.updateTimer, this.config.update_interval * 60000);
         });
     }
