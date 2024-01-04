@@ -39,6 +39,10 @@ Get sensor data from the Airthings Cloud (via Airthings Hub).
 
 * (virtualmarc) hopefully fixed interval
 
+### 1.1.2
+
+* (virtualmarc) fixed rssi
+
 ## License
 
 MIT License

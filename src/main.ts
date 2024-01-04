@@ -24,7 +24,8 @@ const EXCLUDED_TYPES: string[] = [
 const EXCLUDED_SAMPLES: string[] = [
     'time',
     'battery',
-    'relayDeviceType'
+    'relayDeviceType',
+    'rssi'
 ];
 
 // Load your modules here, e.g.:
@@ -390,6 +391,16 @@ class AirthingsCloud extends utils.Adapter {
         if (data.relayDeviceType) {
             await this.setStateAsync(`${deviceId}.relay_device_type`, {
                 val: data.relayDeviceType,
+                ack: true,
+                ts,
+                lc: ts,
+                from: this.namespace
+            }, true);
+        }
+
+        if (data.rssi) {
+            await this.setStateAsync(`${deviceId}.rssi`, {
+                val: data.rssi,
                 ack: true,
                 ts,
                 lc: ts,

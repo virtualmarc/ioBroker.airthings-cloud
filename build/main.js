@@ -30,7 +30,8 @@ const EXCLUDED_TYPES = [
 const EXCLUDED_SAMPLES = [
     'time',
     'battery',
-    'relayDeviceType'
+    'relayDeviceType',
+    'rssi'
 ];
 class AirthingsCloud extends utils.Adapter {
     constructor(options = {}) {
@@ -350,6 +351,15 @@ class AirthingsCloud extends utils.Adapter {
                     from: this.namespace
                 }, true);
             }
+            if (data.rssi) {
+                yield this.setStateAsync(`${deviceId}.rssi`, {
+                    val: data.rssi,
+                    ack: true,
+                    ts,
+                    lc: ts,
+                    from: this.namespace
+                }, true);
+            }
             for (const sampleKey in data) {
                 if (!EXCLUDED_SAMPLES.includes(sampleKey)) {
                     yield this.setObjectNotExistsAsync(`${deviceId}.samples.${sampleKey}`, {
@@ -393,7 +403,7 @@ class AirthingsCloud extends utils.Adapter {
             }
             yield this.syncDevices();
             yield this.updateSamples();
-            setInterval(this.updateTimer, this.config.update_interval * 60000);
+            this.updateTimerId = this.setInterval(() => this.updateTimer(), this.config.update_interval * 60000);
         });
     }
     /**
@@ -402,7 +412,7 @@ class AirthingsCloud extends utils.Adapter {
     onUnload(callback) {
         try {
             if (this.updateTimerId) {
-                clearInterval(this.updateTimerId);
+                this.clearInterval(this.updateTimerId);
             }
             callback();
         }
