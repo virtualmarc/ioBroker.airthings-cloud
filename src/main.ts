@@ -6,7 +6,7 @@
 // you need to create an adapter
 import * as utils from '@iobroker/adapter-core';
 
-const axios = require('axios');
+import axios from 'axios';
 
 const API_BASE: string = 'https://ext-api.airthings.com';
 
