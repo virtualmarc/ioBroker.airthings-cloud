@@ -35,6 +35,10 @@ Get sensor data from the Airthings Cloud (via Airthings Hub).
 
 * (virtualmarc) update samples on start
 
+### 1.1.1
+
+* (virtualmarc) hopefully fixed interval
+
 ## License
 
 MIT License

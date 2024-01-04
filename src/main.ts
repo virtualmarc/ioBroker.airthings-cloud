@@ -48,7 +48,7 @@ class AirthingsCloud extends utils.Adapter {
     token?: string;
     tokenExpiration?: number;
 
-    updateTimerId?: number;
+    updateTimerId?: ioBroker.Interval;
 
     public constructor(options: Partial<utils.AdapterOptions> = {}) {
         super({...options, name: 'airthings-cloud'});
@@ -446,7 +446,7 @@ class AirthingsCloud extends utils.Adapter {
 
         await this.updateSamples();
 
-        setInterval(this.updateTimer, this.config.update_interval * 60_000);
+        this.updateTimerId = this.setInterval(() => this.updateTimer(), this.config.update_interval * 60_000);
     }
 
     /**
@@ -455,7 +455,7 @@ class AirthingsCloud extends utils.Adapter {
     private onUnload(callback: () => void): void {
         try {
             if (this.updateTimerId) {
-                clearInterval(this.updateTimerId);
+                this.clearInterval(this.updateTimerId);
             }
 
             callback();
