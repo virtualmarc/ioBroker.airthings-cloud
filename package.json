@@ -1,73 +1,73 @@
 {
-  "name": "iobroker.airthings-cloud",
-  "version": "1.0.0",
-  "description": "Get sensor data from the Airthings Cloud.",
-  "author": {
-    "name": "virtualmarc",
-    "email": "github@mav.email"
-  },
-  "homepage": "https://github.com/virtualmarc/ioBroker.airthings-cloud",
-  "license": "MIT",
-  "keywords": [
-    "airthings",
-    "airthings hub",
-    "airthings wave",
-    "co2",
-    "radon",
-    "voc",
-    "humidity",
-    "pressure",
-    "temperature"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/virtualmarc/ioBroker.airthings-cloud"
-  },
-  "dependencies": {
-    "@iobroker/adapter-core": "^3.0.4"
-  },
-  "devDependencies": {
-    "@iobroker/testing": "^4.1.0",
-    "@types/chai": "^4.3.11",
-    "@types/chai-as-promised": "^7.1.8",
-    "@types/gulp": "^4.0.17",
-    "@types/mocha": "^10.0.6",
-    "@types/node": "^14.18.63",
-    "@types/proxyquire": "^1.3.31",
-    "@types/sinon": "^17.0.2",
-    "@types/sinon-chai": "^3.2.12",
-    "@typescript-eslint/eslint-plugin": "^6.17.0",
-    "@typescript-eslint/parser": "^6.17.0",
-    "axios": "^1.6.4",
-    "chai": "^4.3.10",
-    "chai-as-promised": "^7.1.1",
-    "eslint": "^8.56.0",
-    "gulp": "^4.0.2",
-    "mocha": "^10.2.0",
-    "proxyquire": "^2.1.3",
-    "rimraf": "^5.0.5",
-    "sinon": "^17.0.1",
-    "sinon-chai": "^3.7.0",
-    "source-map-support": "^0.5.21",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
-  },
-  "main": "build/main.js",
-  "scripts": {
-    "prebuild": "rimraf ./build",
-    "build:ts": "tsc -p tsconfig.build.json",
-    "build": "npm run build:ts",
-    "watch:ts": "tsc -p tsconfig.build.json --watch",
-    "watch": "npm run watch:ts",
-    "test:ts": "mocha src/**/*.test.ts",
-    "test:package": "mocha test/package --exit",
-    "test:unit": "mocha test/unit --exit",
-    "test:integration": "mocha test/integration --exit",
-    "test": "npm run test:ts && npm run test:package",
-    "lint": "eslint --ext .ts src"
-  },
-  "bugs": {
-    "url": "https://github.com/virtualmarc/ioBroker.airthings-cloud/issues"
-  },
-  "readmeFilename": "README.md"
+    "name": "iobroker.airthings-cloud",
+    "version": "1.0.0",
+    "description": "Get sensor data from the Airthings Cloud.",
+    "author": {
+        "name": "virtualmarc",
+        "email": "github@mav.email"
+    },
+    "homepage": "https://github.com/virtualmarc/ioBroker.airthings-cloud",
+    "license": "MIT",
+    "keywords": [
+        "airthings",
+        "airthings hub",
+        "airthings wave",
+        "co2",
+        "radon",
+        "voc",
+        "humidity",
+        "pressure",
+        "temperature"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/virtualmarc/ioBroker.airthings-cloud"
+    },
+    "dependencies": {
+        "@iobroker/adapter-core": "^3.0.4"
+    },
+    "devDependencies": {
+        "@iobroker/testing": "^4.1.0",
+        "@types/chai": "^4.3.11",
+        "@types/chai-as-promised": "^7.1.8",
+        "@types/gulp": "^4.0.17",
+        "@types/mocha": "^10.0.6",
+        "@types/node": "^14.18.63",
+        "@types/proxyquire": "^1.3.31",
+        "@types/sinon": "^17.0.2",
+        "@types/sinon-chai": "^3.2.12",
+        "@typescript-eslint/eslint-plugin": "^6.17.0",
+        "@typescript-eslint/parser": "^6.17.0",
+        "axios": "^1.6.4",
+        "chai": "^4.3.10",
+        "chai-as-promised": "^7.1.1",
+        "eslint": "^8.56.0",
+        "gulp": "^4.0.2",
+        "mocha": "^10.2.0",
+        "proxyquire": "^2.1.3",
+        "rimraf": "^5.0.5",
+        "sinon": "^17.0.1",
+        "sinon-chai": "^3.7.0",
+        "source-map-support": "^0.5.21",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.3.3"
+    },
+    "main": "build/src/main.js",
+    "scripts": {
+        "prebuild": "rimraf ./build",
+        "build:ts": "tsc -p tsconfig.build.json",
+        "build": "npm run build:ts",
+        "watch:ts": "tsc -p tsconfig.build.json --watch",
+        "watch": "npm run watch:ts",
+        "test:ts": "mocha src/**/*.test.ts",
+        "test:package": "mocha test/package --exit",
+        "test:unit": "mocha test/unit --exit",
+        "test:integration": "mocha test/integration --exit",
+        "test": "npm run test:ts && npm run test:package",
+        "lint": "eslint --ext .ts src"
+    },
+    "bugs": {
+        "url": "https://github.com/virtualmarc/ioBroker.airthings-cloud/issues"
+    },
+    "readmeFilename": "README.md"
 }
