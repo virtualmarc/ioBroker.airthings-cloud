@@ -62,30 +62,36 @@ class AirthingsCloud extends utils.Adapter {
     private async authenticate(): Promise<boolean> {
         this.log.info('Authenticating with Client ID: ' + this.config.client_id);
 
-        const resp = await axios.post('https://accounts-api.airthings.com/v1/token', {
-            'grant_type': 'client_credentials',
-            'client_id': this.config.client_id,
-            'client_secret': this.config.client_secret,
-            'scope': ['read:device:current_values']
-        });
+        try {
+            const resp = await axios.post('https://accounts-api.airthings.com/v1/token', {
+                'grant_type': 'client_credentials',
+                'client_id': this.config.client_id,
+                'client_secret': this.config.client_secret,
+                'scope': ['read:device:current_values']
+            });
 
-        if (resp.status === 200) {
-            this.setState('info.connection', true, true);
+            if (resp.status === 200) {
+                this.setState('info.connection', true, true);
 
-            this.token = resp.data.access_token;
-            this.tokenExpiration = Date.now() + (resp.data.expires_in * 1000);
+                this.token = resp.data.access_token;
+                this.tokenExpiration = Date.now() + (resp.data.expires_in * 1000);
 
-            this.log.info('Authentication successful');
+                this.log.info('Authentication successful');
 
-            return true;
-        } else {
-            this.setState('info.connection', false, true);
+                return true;
+            } else {
+                this.setState('info.connection', false, true);
 
-            this.log.error(`Authentication failed: ${JSON.stringify(resp.data)}`);
+                this.log.error(`Authentication failed: ${JSON.stringify(resp.data)}`);
 
-            if (this.updateTimerId) {
-                clearInterval(this.updateTimerId);
+                if (this.updateTimerId) {
+                    clearInterval(this.updateTimerId);
+                }
+
+                return false;
             }
+        } catch (ex) {
+            this.log.error('Failed to authenticate ' + ex);
 
             return false;
         }
