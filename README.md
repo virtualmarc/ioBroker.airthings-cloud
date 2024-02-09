@@ -43,6 +43,11 @@ Get sensor data from the Airthings Cloud (via Airthings Hub).
 
 * (virtualmarc) fixed rssi
 
+### 1.1.3
+
+* (virtualmarc) some error handling
+* (virtualmarc) load inactive devices
+
 ## License
 
 MIT License

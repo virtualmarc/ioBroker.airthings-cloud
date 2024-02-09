@@ -107,7 +107,7 @@ class AirthingsCloud extends utils.Adapter {
     }
 
     private async syncDevices(): Promise<void> {
-        const resp = await axios.get(`${API_BASE}/v1/devices`, {
+        const resp = await axios.get(`${API_BASE}/v1/devices?showInactive=true`, {
             headers: {
                 Authorization: `Bearer ${await this.getToken()}`
             }
@@ -349,15 +349,19 @@ class AirthingsCloud extends utils.Adapter {
         const devices = await this.getDevicesAsync();
 
         for (const device of devices) {
-            const type = (await this.getStateAsync(`${device._id}.type`))?.val as string;
-            const active = (await this.getStateAsync(`${device._id}.segment.active`))?.val;
+            try {
+                const type = (await this.getStateAsync(`${device._id}.type`))?.val as string;
+                const active = (await this.getStateAsync(`${device._id}.segment.active`))?.val;
 
-            if (active && !EXCLUDED_TYPES.includes(type ?? 'UNKNOWN')) {
-                this.log.debug(`Update device samples: ${device._id}`);
+                if (active && !EXCLUDED_TYPES.includes(type ?? 'UNKNOWN')) {
+                    this.log.debug(`Update device samples: ${device._id}`);
 
-                await this.updateDeviceSamples(device._id);
-            } else {
-                this.log.debug(`Device ${device._id} is excluded`);
+                    await this.updateDeviceSamples(device._id);
+                } else {
+                    this.log.debug(`Device ${device._id} is excluded`);
+                }
+            } catch (ex) {
+                this.log.error(`Failed to update device ${device._id} ` + ex);
             }
         }
     }
@@ -437,9 +441,13 @@ class AirthingsCloud extends utils.Adapter {
     private updateTimer(): void {
         this.log.debug('Update samples');
 
-        this.updateSamples().then(() => {
-            this.log.debug('Sample update finished');
-        });
+        try {
+            this.updateSamples().then(() => {
+                this.log.debug('Sample update finished');
+            });
+        } catch (ex) {
+            this.log.error('Failed to update samples ' + ex);
+        }
     }
 
     /**
@@ -453,9 +461,13 @@ class AirthingsCloud extends utils.Adapter {
             return;
         }
 
-        await this.syncDevices();
+        try {
+            await this.syncDevices();
 
-        await this.updateSamples();
+            await this.updateSamples();
+        } catch (ex) {
+            this.log.error('Error on initial sync ' + ex);
+        }
 
         this.updateTimerId = this.setInterval(() => this.updateTimer(), this.config.update_interval * 60_000);
     }

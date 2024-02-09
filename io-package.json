@@ -18,6 +18,10 @@
             "1.1.2": {
                 "en": "fixed rssi",
                 "de": "Signalstärke korrigiert"
+            },
+            "1.1.3": {
+                "en": "some error handling & load inactive devices",
+                "de": "Fehlerbehandlung & inaktive Geräte laden"
             }
         },
         "title": "Airthings Cloud",
