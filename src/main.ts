@@ -72,7 +72,7 @@ class AirthingsCloud extends utils.Adapter {
             });
 
             if (resp.status === 200) {
-                this.setState('info.connection', true, true);
+                //this.setState('info.connection', true, true);
 
                 this.token = resp.data.access_token;
                 this.tokenExpiration = Date.now() + (resp.data.expires_in * 1000);
@@ -81,7 +81,7 @@ class AirthingsCloud extends utils.Adapter {
 
                 return true;
             } else {
-                this.setState('info.connection', false, true);
+                //this.setState('info.connection', false, true);
 
                 this.log.error(`Authentication failed: ${JSON.stringify(resp.data)}`);
 
@@ -455,7 +455,8 @@ class AirthingsCloud extends utils.Adapter {
      */
     private async onReady(): Promise<void> {
         // Reset the connection indicator during startup
-        this.setState('info.connection', false, true);
+        //this.setState('info.connection', false, true);
+        this.setState('info.connection', true, true);
 
         if (!await this.authenticate()) {
             return;
@@ -480,6 +481,8 @@ class AirthingsCloud extends utils.Adapter {
             if (this.updateTimerId) {
                 this.clearInterval(this.updateTimerId);
             }
+
+            this.setState('info.connection', false, true);
 
             callback();
         } catch (e) {

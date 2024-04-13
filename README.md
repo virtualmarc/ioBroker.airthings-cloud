@@ -48,6 +48,10 @@ Get sensor data from the Airthings Cloud (via Airthings Hub).
 * (virtualmarc) some error handling
 * (virtualmarc) load inactive devices
 
+### 1.1.4
+
+* (virtualmarc) Do not set connection status to false if authentication failed, so the adapter is not stopped
+
 ## License
 
 MIT License

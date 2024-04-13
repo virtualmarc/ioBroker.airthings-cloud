@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "airthings-cloud",
-        "version": "1.1.3",
+        "version": "1.1.4",
         "news": {
             "1.0.0": {
                 "en": "initial release",
@@ -22,6 +22,10 @@
             "1.1.3": {
                 "en": "some error handling & load inactive devices",
                 "de": "Fehlerbehandlung & inaktive Geräte laden"
+            },
+            "1.1.4": {
+                "en": "Do not set connection status to false if authentication failed, so the adapter is not stopped",
+                "de": "Connection Status nicht auf false setzen, wenn die Authentifizierung nicht funktioniert hat, damit der Adapter nicht beendet wird"
             }
         },
         "title": "Airthings Cloud",
