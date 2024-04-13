@@ -26,6 +26,10 @@
             "1.1.4": {
                 "en": "Do not set connection status to false if authentication failed, so the adapter is not stopped",
                 "de": "Connection Status nicht auf false setzen, wenn die Authentifizierung nicht funktioniert hat, damit der Adapter nicht beendet wird"
+            },
+            "1.1.5": {
+                "en": "Bumped Node.js to 18",
+                "de": "Node.js auf 18 aktualisiert"
             }
         },
         "title": "Airthings Cloud",

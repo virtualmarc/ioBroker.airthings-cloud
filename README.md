@@ -52,6 +52,10 @@ Get sensor data from the Airthings Cloud (via Airthings Hub).
 
 * (virtualmarc) Do not set connection status to false if authentication failed, so the adapter is not stopped
 
+### 1.1.5
+
+* (virtualmarc) Bumped Node.js to 18
+
 ## License
 
 MIT License
